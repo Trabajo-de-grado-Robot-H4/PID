@@ -140,6 +140,7 @@ def loop():
                
                Sensor=rotaryDeal()
                Esfuerzo= PID_function(Kp,Ki,Kd,Set_point,Sensor)
+               print(Esfuerzo)
                if Esfuerzo > 0:
                    GPIO.output(MotorIN1,GPIO.HIGH)  # Establecemos el sentido de giro con los pines IN1 e IN2  
                    GPIO.output(MotorIN2,GPIO.LOW)   # Establecemos el sentido de giro con los pines IN1 e IN2

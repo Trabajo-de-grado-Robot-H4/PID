@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-#Probando actualización
+#Probando actualización 14:23
 import RPi.GPIO as GPIO
 import time
 

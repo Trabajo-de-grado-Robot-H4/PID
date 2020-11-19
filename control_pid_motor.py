@@ -43,8 +43,7 @@ def setup():
     GPIO.setup(MotorIN2,GPIO.OUT)
     GPIO.setup(MotorE1,GPIO.OUT)
 
-    p = GPIO.PWM(MotorE1, 50)  # Creamos la instancia PWM con el GPIO a utilizar y la frecuencia de la señal PWM
-    p.start(0)  #Inicializamos el objeto PWM
+
     
 def rotaryDeal():
  global flag
@@ -141,6 +140,8 @@ def loop():
                Sensor=rotaryDeal()
                Esfuerzo= PID_function(Kp,Ki,Kd,Set_point,Sensor)
                print(Esfuerzo)
+                p = GPIO.PWM(MotorE1, 50)  # Creamos la instancia PWM con el GPIO a utilizar y la frecuencia de la señal PWM
+                p.start(0)  #Inicializamos el objeto PWM
                if Esfuerzo > 0:
                    GPIO.output(MotorIN1,GPIO.HIGH)  # Establecemos el sentido de giro con los pines IN1 e IN2  
                    GPIO.output(MotorIN2,GPIO.LOW)   # Establecemos el sentido de giro con los pines IN1 e IN2

@@ -1,19 +1,21 @@
 #!/usr/bin/env python
-#Probando actualización 14:23
 import RPi.GPIO as GPIO
 import time
 
+"""pines usados """
+RoAPin = 20    
+RoBPin = 21   
+RoSPin = 13    
+MotorIN1 = 15
+MotorIN2 = 14
+MotorE1 = 18
 """ Encoder variables """
-RoAPin = 20    # pin11
-RoBPin = 21   # pin12
-RoSPin = 13    # pin13
-
 globalCounter = 0
 gain=0.97593582887
 flag = 0
 Last_RoB_Status = 0.0
 Current_RoB_Status = 0.0
-encoder=0.0
+encoder=0
 
 """ PID variables """
 outMax=100
@@ -35,8 +37,14 @@ def setup():
     GPIO.setup(RoSPin,GPIO.IN,pull_up_down=GPIO.PUD_UP)
     rotaryClear()
 
+
     """ Setup del motor """
-    
+    GPIO.setup(MotorIN1,GPIO.OUT)
+    GPIO.setup(MotorIN2,GPIO.OUT)
+    GPIO.setup(MotorE1,GPIO.OUT)
+
+    p = GPIO.PWM(MotorE1, 50)  # Creamos la instancia PWM con el GPIO a utilizar y la frecuencia de la señal PWM
+    p.start(0)  #Inicializamos el objeto PWM
     
 def rotaryDeal():
  global flag
@@ -55,14 +63,14 @@ def rotaryDeal():
       flag = 0
       if (Last_RoB_Status == 0) and (Current_RoB_Status == 1):
          globalCounter = globalCounter + 1
-         print ('globalCounter =')
-         encoder= "{0:.3f}".format(globalCounter*gain)
-         return(encoder)
+         #print ('globalCounter =')
+         #encoder= "{0:.3f}".format(globalCounter*gain)
+         #return(encoder)
       if (Last_RoB_Status == 1) and (Current_RoB_Status == 0):
          globalCounter = globalCounter - 1
-         print ('globalCounter =')
-         encoder= "{0:.3f}".format(globalCounter*gain)
-         return(encoder)
+         #print ('globalCounter =')
+ encoder= globalCounter*gain
+ return(encoder)
 
 def clear(ev=None):
         globalCounter=0
@@ -122,23 +130,31 @@ def PID_function(Kp,Ki,kd,Set_point,Sensor):
     return (output)  
 
 
-
-
 def loop():
-       
+        Valores= Input_data()
+        Kp=Valores[0]
+        Ki=Valores[1]
+        kd=Valores[2]
+        Set_point=Valores[3]
         while True:
-               Valores= Input_data()
-               Kp=Valores[0]
-               Ki=Valores[1]
-               kd=Valores[2]
-               Set_point=Valores[3]
+               
                Sensor=rotaryDeal()
                Esfuerzo= PID_function(Kp,Ki,Kd,Set_point,Sensor)
+               if Esfuerzo > 0:
+                   GPIO.output(MotorIN1,GPIO.HIGH) # Establecemos el sentido de giro con los pines IN1 e IN2  
+                   GPIO.output(MotorIN2,GPIO.LOW)  # Establecemos el sentido de giro con los pines IN1 e IN2
+                   p.ChangeDutyCycle(Esfuerzo)
+               else:
+                   GPIO.output(MotorIN1,GPIO.LOW) # Establecemos el sentido de giro con los pines IN1 e IN2  
+                   GPIO.output(MotorIN2,GPIO.HIGH)  # Establecemos el sentido de giro con los pines IN1 e IN2
+                   p.ChangeDutyCycle(abs(Esfuerzo))
+                
+
 #              
 def Input_data():
     Datos_pid=[]
     for v in range(4):
-        val=float(input("Inserte Kp, Ki, Kd y Set point en ese orden: "))
+        val=float(input("Inserte Kp,Ki,Kd y Set point en este orden: "))
         Datos_pid.append(val)
     
     print(Datos_pid)

@@ -138,7 +138,7 @@ def loop():
 def Input_data():
     Datos_pid=[]
     for v in range(4):
-        val=float(input("Inserte Kp,Ki,Kd y Set point en este orden"))
+        val=float(input("Inserte Kp, Ki, Kd y Set point en ese orden: "))
         Datos_pid.append(val)
     
     print(Datos_pid)

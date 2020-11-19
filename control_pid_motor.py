@@ -2,7 +2,7 @@
 import RPi.GPIO as GPIO
 import time
 
-"""pines usados """
+"""Pines usados """
 RoAPin = 20    
 RoBPin = 21   
 RoSPin = 13    
@@ -28,7 +28,7 @@ Integral=0.0
 Kp=0                                       # Proportional controller Gain (0 to 100)  
 Ki=0                                       # Integral controller Gain (0 to 100)  
 Kd=0             
-""" comienzo de codigo """
+""" Comienzo del código """
 def setup():
 
     GPIO.setmode(GPIO.BCM)
@@ -141,16 +141,14 @@ def loop():
                Sensor=rotaryDeal()
                Esfuerzo= PID_function(Kp,Ki,Kd,Set_point,Sensor)
                if Esfuerzo > 0:
-                   GPIO.output(MotorIN1,GPIO.HIGH) # Establecemos el sentido de giro con los pines IN1 e IN2  
-                   GPIO.output(MotorIN2,GPIO.LOW)  # Establecemos el sentido de giro con los pines IN1 e IN2
+                   GPIO.output(MotorIN1,GPIO.HIGH)  # Establecemos el sentido de giro con los pines IN1 e IN2  
+                   GPIO.output(MotorIN2,GPIO.LOW)   # Establecemos el sentido de giro con los pines IN1 e IN2
                    p.ChangeDutyCycle(Esfuerzo)
                else:
-                   GPIO.output(MotorIN1,GPIO.LOW) # Establecemos el sentido de giro con los pines IN1 e IN2  
+                   GPIO.output(MotorIN1,GPIO.LOW)   # Establecemos el sentido de giro con los pines IN1 e IN2  
                    GPIO.output(MotorIN2,GPIO.HIGH)  # Establecemos el sentido de giro con los pines IN1 e IN2
                    p.ChangeDutyCycle(abs(Esfuerzo))
-                
-
-#              
+                            
 def Input_data():
     Datos_pid=[]
     for v in range(4):

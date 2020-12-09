@@ -5,9 +5,9 @@ import time
 RoAPin = 20    # pin11
 RoBPin = 21   # pin12
 
-GPIO.setmode(GPIO.BCM)
 GPIO.setup(RoAPin, GPIO.IN) # input mode
 GPIO.setup(RoBPin, GPIO.IN)
+GPIO.setmode(GPIO.BCM)
 
 globalCounter = 0.0
 gain=0.97593582887

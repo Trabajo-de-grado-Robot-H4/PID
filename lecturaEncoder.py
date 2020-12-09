@@ -6,9 +6,9 @@ RoAPin = 20    # pin11
 RoBPin = 21   # pin12
 
 def setup():
-GPIO.setmode(GPIO.BCM)
-GPIO.setup(RoAPin, GPIO.IN) # input mode
-GPIO.setup(RoBPin, GPIO.IN)
+ GPIO.setmode(GPIO.BCM)
+ GPIO.setup(RoAPin, GPIO.IN) # input mode
+ GPIO.setup(RoBPin, GPIO.IN)
 
 
 globalCounter = 0.0

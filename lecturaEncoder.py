@@ -4,7 +4,7 @@ import time
 
 RoAPin = 20    # pin11
 RoBPin = 21   # pin12
-RoSPin = 13    # pin13
+
 
 globalCounter = 0.0
 gain=0.97593582887
@@ -18,9 +18,7 @@ def setup():
     GPIO.setmode(GPIO.BCM)
     GPIO.setup(RoAPin, GPIO.IN) # input mode
     GPIO.setup(RoBPin, GPIO.IN)
-    GPIO.setup(RoSPin,GPIO.IN,pull_up_down=GPIO.PUD_UP)
-    rotaryClear()
-
+ 
 def rotaryDeal():
  global flag
  global Last_RoB_Status
@@ -51,8 +49,6 @@ def clear(ev=None):
         print ('globalCounter = %d'%globalCounter)
         time.sleep(1)
 
-def rotaryClear():
-        GPIO.add_event_detect(RoSPin, GPIO.FALLING, callback=clear) # wait for falling
 
 
 def loop():

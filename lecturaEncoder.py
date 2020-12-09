@@ -5,6 +5,9 @@ import time
 RoAPin = 20    # pin11
 RoBPin = 21   # pin12
 
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(RoAPin, GPIO.IN) # input mode
+GPIO.setup(RoBPin, GPIO.IN)
 
 globalCounter = 0.0
 gain=0.97593582887
@@ -13,9 +16,7 @@ Last_RoB_Status = 0.0
 Current_RoB_Status = 0.0
 grados=0.0
 
-GPIO.setmode(GPIO.BCM)
-GPIO.setup(RoAPin, GPIO.IN) # input mode
-GPIO.setup(RoBPin, GPIO.IN)
+
  
 def rotaryDeal():
  global flag

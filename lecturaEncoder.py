@@ -5,9 +5,11 @@ import time
 RoAPin = 20    # pin11
 RoBPin = 21   # pin12
 
+def setup():
+GPIO.setmode(GPIO.BCM)
 GPIO.setup(RoAPin, GPIO.IN) # input mode
 GPIO.setup(RoBPin, GPIO.IN)
-GPIO.setmode(GPIO.BCM)
+
 
 globalCounter = 0.0
 gain=0.97593582887
@@ -60,7 +62,7 @@ def destroy():
         GPIO.cleanup()             # Release resource
 
 if __name__ == '__main__':     # Program start from here
-       
+        setup()
         try:
                loop()
         except KeyboardInterrupt:  # When 'Ctrl+C' is pressed, the child program destroy() will be  executed.

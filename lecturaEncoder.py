@@ -13,11 +13,9 @@ Last_RoB_Status = 0.0
 Current_RoB_Status = 0.0
 grados=0.0
 
-def setup():
-
-    GPIO.setmode(GPIO.BCM)
-    GPIO.setup(RoAPin, GPIO.IN) # input mode
-    GPIO.setup(RoBPin, GPIO.IN)
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(RoAPin, GPIO.IN) # input mode
+GPIO.setup(RoBPin, GPIO.IN)
  
 def rotaryDeal():
  global flag
@@ -61,7 +59,7 @@ def destroy():
         GPIO.cleanup()             # Release resource
 
 if __name__ == '__main__':     # Program start from here
-        setup()
+       
         try:
                loop()
         except KeyboardInterrupt:  # When 'Ctrl+C' is pressed, the child program destroy() will be  executed.
